@@ -1,6 +1,7 @@
 %module level1
 %{
-extern int level1_func1(int a, int b);
+/* This block will be included into *_wrap.cxx/c */
+#include "level1.hpp"
 %}
 
-#include "level1.hpp"
+%include "level1.hpp"
