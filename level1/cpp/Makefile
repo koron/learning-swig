@@ -29,19 +29,19 @@ clean :
 	DEL /F *.pdb
 
 .c.obj ::
-	$(CC) /NOLOGO $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
+	$(CC) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
 
 .cpp.obj ::
-	$(CC) /NOLOGO $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
+	$(CC) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
 
 $(NAME).exe : $(OBJS)
-	$(link) /NOLOGO $(ldebug) $(conlflags) $(conlibsdll) $(LDFLAGS) \
+	$(link) /nologo $(ldebug) $(conlflags) $(conlibsdll) $(LDFLAGS) \
 		/OUT:$@ $(OBJS) $(LIBS)
 	IF EXIST $@.manifest \
 		mt -nologo -manifest $@.manifest -outputresource:$@;1
 
 $(NAME).dll : $(OBJS) $(DLLDEF)
-	$(link) /NOLOGO $(ldebug) $(dlllflags) $(conlibsdll) $(LDFLAGS) \
+	$(link) /nologo $(ldebug) $(dlllflags) $(conlibsdll) $(LDFLAGS) \
 		/OUT:$@ /DEF:$(DLLDEF) $(OBJS) $(LIBS)
 	IF EXIST $@.manifest \
 		mt -nologo -manifest $@.manifest -outputresource:$@;2
