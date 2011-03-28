@@ -14,7 +14,11 @@ OBJS =		$(OBJS1:.c=.obj)
 
 TARGET1 =	$(NAME).$(TYPE)
 !IFDEF TARGET_OUTDIR
+!IFDEF OUTNAME
+TARGET2 =	$(TARGET_OUTDIR)\$(OUTNAME)
+!ELSE
 TARGET2 =	$(TARGET_OUTDIR)\$(TARGET1)
+!ENDIF
 TARGET =	$(TARGET2)
 !ELSE
 TARGET_OUTDIR =	$(MAKEDIR)\tmp
@@ -41,11 +45,10 @@ _WIN32_IE = 	0x0600
 
 !INCLUDE <win32.mak>
 
-build : $(TARGET)
+build : $(TARGET) $(EXTRA_BUILD)
 
 clean :
-	-DEL /F $(OBJS)
-	-DEL /F $(TARGET1)
+	-DEL /F $(OBJS) $(TARGET1) $(EXTRA_CLEAN)
 	-DEL /F *.lib
 	-DEL /F *.exp
 	-DEL /F *.pdb
@@ -72,10 +75,8 @@ $(NAME).dll : $(OBJS) $(DLLDEF)
 	IF EXIST $@.manifest \
 	    mt -nologo -manifest $@.manifest -outputresource:$@;2
 
-$(TARGET2) : $(TARGET1) $(TARGET_OUTDIR)
-	COPY $(TARGET1) $(TARGET2)
-
-$(TARGET_OUTDIR) : 
+$(TARGET2) : $(TARGET1)
 	@IF NOT EXIST $(TARGET_OUTDIR)\$(NULL) MKDIR $(TARGET_OUTDIR)
+	COPY $(TARGET1) $(TARGET2)
 
 .PHONY : build clean distclean
