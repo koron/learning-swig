@@ -1,12 +1,16 @@
-NAME = level1
-SRCS = level1.cpp
+NAME = _level1
+SWIG_SRC = level1.i
+SWIG_PY = level1.py
 DLLDEF = level1.def
-CCFLAGS =
-LDFLAGS =
-LIBS =
-BUILD_TARGET = $(NAME).dll
+CCFLAGS = /I $(PYTHON_PATH)\include
+LDFLAGS = /LIBPATH:$(PYTHON_PATH)\libs /LIBPATH:..\cpp
+LIBS = level1.lib
+BUILD_TARGET = $(NAME).pyd
 
-OBJS = $(SRCS:.cpp=.obj)
+PYTHON_PATH = C:\Local\Python\Python27-amd64
+
+WRAP_SRC = $(SWIG_SRC:.i=_wrap.c)
+OBJS = $(WRAP_SRC:.c=.obj)
 
 NODEBUG =	1
 CCFLAGS = 	$(CCFLAGS) -D_NDEBUG
@@ -30,6 +34,10 @@ clean :
 	DEL /F *.lib
 	DEL /F *.exp
 	DEL /F *.pdb
+	DEL /F *.pyd
+	DEL /F *.pyc
+	DEL /F $(WRAP_SRC)
+	DEL /F $(SWIG_PY)
 
 .c.obj ::
 	$(CC) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
@@ -43,10 +51,16 @@ $(NAME).exe : $(OBJS)
 	IF EXIST $@.manifest \
 		mt -nologo -manifest $@.manifest -outputresource:$@;1
 
-$(NAME).dll : $(OBJS) $(DLLDEF)
+$(NAME).dll : $(OBJS)
 	$(link) /nologo $(ldebug) $(dlllflags) $(conlibsdll) $(LDFLAGS) \
-		/OUT:$@ /DEF:$(DLLDEF) $(OBJS) $(LIBS)
+		/OUT:$@ $(OBJS) $(LIBS)
 	IF EXIST $@.manifest \
 		mt -nologo -manifest $@.manifest -outputresource:$@;2
+
+$(NAME).pyd : $(NAME).dll
+	COPY $(NAME).dll $@
+
+$(WRAP_SRC) $(SWIG_PY) : $(SWIG_SRC)
+	swig -python $(SWIG_SRC)
 
 .PHONY : build clean
