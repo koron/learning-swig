@@ -1,52 +1,12 @@
-NAME = level1
-SRCS = level1.cpp
-DLLDEF = level1.def
+NAME =		level1
+TYPE = 		dll
+DLLDEF = 	level1.def
+SRCS = 		level1.cpp
+
 CCFLAGS =
 LDFLAGS =
 LIBS =
-BUILD_TARGET = $(NAME).dll
 
-OBJS = $(SRCS:.cpp=.obj)
+RELEASE =	1
 
-NODEBUG =	1
-CCFLAGS = 	$(CCFLAGS) -D_NDEBUG
-
-APPVER = 6.0
-TARGETOS = WINNT
-TARGETLANG = LANG_JAPANESE
-_WIN32_IE = 0x0600
-!INCLUDE <win32.mak>
-
-CCFLAGS = 	$(CCFLAGS) \
-		-D_CRT_SECURE_NO_WARNINGS=1 \
-		-D_BIND_TO_CURRENT_VCLIBS_VERSION=1
-
-build : $(BUILD_TARGET)
-
-clean :
-	DEL /F *.obj
-	DEL /F *.exe
-	DEL /F *.dll
-	DEL /F *.lib
-	DEL /F *.exp
-	DEL /F *.pdb
-
-.c.obj ::
-	$(CC) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
-
-.cpp.obj ::
-	$(CC) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
-
-$(NAME).exe : $(OBJS)
-	$(link) /nologo $(ldebug) $(conlflags) $(conlibsdll) $(LDFLAGS) \
-		/OUT:$@ $(OBJS) $(LIBS)
-	IF EXIST $@.manifest \
-		mt -nologo -manifest $@.manifest -outputresource:$@;1
-
-$(NAME).dll : $(OBJS) $(DLLDEF)
-	$(link) /nologo $(ldebug) $(dlllflags) $(conlibsdll) $(LDFLAGS) \
-		/OUT:$@ /DEF:$(DLLDEF) $(OBJS) $(LIBS)
-	IF EXIST $@.manifest \
-		mt -nologo -manifest $@.manifest -outputresource:$@;2
-
-.PHONY : build clean
+!INCLUDE <mk\msvc-build.mk>
