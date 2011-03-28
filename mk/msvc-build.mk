@@ -10,7 +10,8 @@
 # 	RELEASE
 
 OBJS1 =		$(SRCS:.cpp=.obj)
-OBJS =		$(OBJS1:.c=.obj)
+OBJS2 =		$(OBJS1:.cxx=.obj)
+OBJS =		$(OBJS2:.c=.obj)
 
 TARGET1 =	$(NAME).$(TYPE)
 !IFDEF TARGET_OUTDIR
@@ -61,6 +62,9 @@ distclean : clean
 	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
 
 .cpp.obj ::
+	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
+
+.cxx.obj ::
 	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
 
 $(NAME).exe : $(OBJS)
