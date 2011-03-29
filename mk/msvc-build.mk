@@ -35,9 +35,11 @@ CCFLAGS = 	$(CCFLAGS) -D_DEBUG
 !ENDIF
 
 CCFLAGS =	$(CCFLAGS) \
-		-D_CRT_SECURE_NO_WARNINGS=1 \
-		-D_BIND_TO_CURRENT_VCLIBS_VERSION=1 \
-		-W3
+		/D_CRT_SECURE_NO_WARNINGS=1 \
+		/D_BIND_TO_CURRENT_VCLIBS_VERSION=1 \
+		/W3
+CPPFLAGS =	$(CCFLAGS) \
+		/EHsc
 
 APPVER =	6.0
 TARGETOS =	WINNT
@@ -62,10 +64,10 @@ distclean : clean
 	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
 
 .cpp.obj ::
-	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
+	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CPPFLAGS) $<
 
 .cxx.obj ::
-	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CCFLAGS) $<
+	$(cc) /nologo $(cdebug) $(cflags) $(cvarsdll) $(CPPFLAGS) $<
 
 $(NAME).exe : $(OBJS)
 	$(link) /NOLOGO $(ldebug) $(conlflags) $(conlibsdll) $(LDFLAGS) \
