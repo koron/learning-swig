@@ -15,6 +15,10 @@ int func1(const Point_t* pt);
 
 void func2(const Point_t* pt1, const Point_t* pt2, Point_t* pt);
 
+Point_t func3(const Point_t* pt1, const Point_t* pt2);
+
+void func4(const Point_t* pt1, const Point_t* pt2, Point_t* out_pt);
+
 #ifdef __cplusplus
 }
 #endif

@@ -28,6 +28,20 @@ def func2():
     level2.func2(p1, p2, out)
     dumpPoint(out, 'func2')
 
+def func3():
+    p1 = newPoint(1, 2, 3.5);
+    p2 = newPoint(10, 20, 30);
+    out = level2.func3(p1, p2)
+    dumpPoint(out, 'func3')
+
+def func4():
+    p1 = newPoint(1, 2, 3.5);
+    p2 = newPoint(10, 20, 30);
+    out = level2.func4(p1, p2)
+    dumpPoint(out, 'func4')
+
 if __name__ == '__main__':
     func1()
     func2()
+    func3()
+    func4()

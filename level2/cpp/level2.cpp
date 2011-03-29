@@ -27,3 +27,19 @@ func2(const Point_t* pt1, const Point_t* pt2, Point_t* pt)
         }
     }
 }
+
+// Simple, return a struct by value.
+    Point_t
+func3(const Point_t* pt1, const Point_t* pt2)
+{
+    Point_t out;
+    func2(pt1, pt2, &out);
+    return out;
+}
+
+// Complex, an output argument typemapped to return value.
+    void
+func4(const Point_t* pt1, const Point_t* pt2, Point_t* out_pt)
+{
+    func2(pt1, pt2, out_pt);
+}
