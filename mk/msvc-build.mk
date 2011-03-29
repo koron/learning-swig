@@ -55,6 +55,7 @@ clean :
 	-DEL /F *.lib
 	-DEL /F *.exp
 	-DEL /F *.pdb
+	-DEL /F *.manifest
 
 distclean : clean
 	-DEL /F $(TARGET2)
