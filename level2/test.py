@@ -26,7 +26,7 @@ def func2():
     p2 = newPoint(10, 20, 30);
     out = newPoint(0, 0, 0)
     level2.func2(p1, p2, out)
-    dumpPoint(out, 'func2-1')
+    dumpPoint(out, 'func2')
 
 if __name__ == '__main__':
     func1()

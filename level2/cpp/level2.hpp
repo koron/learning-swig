@@ -13,7 +13,7 @@ typedef struct Point_tag {
 
 int func1(const Point_t* pt);
 
-void func2(const Point_t* pt1, const Point_t* pt2, Point_t* out_pt);
+void func2(const Point_t* pt1, const Point_t* pt2, Point_t* pt);
 
 #ifdef __cplusplus
 }
